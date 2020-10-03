@@ -1,3 +1,5 @@
+import time
+
 def LevenshteinRecursion(string1, string2):
     if (string1 == "" or string2 == ""):
         return abs(len(string1) - len(string2))
@@ -16,7 +18,7 @@ def LevenshteinMatrix(string1, string2):
 
     table = [[i + j for j in range(len_j)] for i in range(len_i)]
 
-    OutputTable(table, string1, string2)
+    #OutputTable(table, string1, string2)
 
     for i in range(1, len_i):
         for j in range(1, len_j):
@@ -26,7 +28,7 @@ def LevenshteinMatrix(string1, string2):
                               table[i][j - 1] + 1,
                               table[i - 1][j - 1] + forfeit)
 
-    OutputTable(table, string1, string2)
+    #OutputTable(table, string1, string2)
 
     return (table[-1][-1])
 
@@ -35,8 +37,6 @@ def GetRecursionLevenshteinMatrix(string1, string2):
     len_j = len(string2)
     
     matrix = [[-1 for j in range(len_j + 1)] for i in range(len_i + 1)]
-    for i in matrix:
-        print(i)
 
     return RecursionLevenshteinMatrix(string1, len_i, string2, len_j, matrix)
 
@@ -82,7 +82,7 @@ def DamerauLevenshteinMatrix(string1, string2):
 
     table = [[i + j for j in range(len_j)] for i in range(len_i)]
 
-    OutputTable(table, string1, string2)
+    #OutputTable(table, string1, string2)
 
     for i in range(1, len_i):
         for j in range(1, len_j):
@@ -95,17 +95,19 @@ def DamerauLevenshteinMatrix(string1, string2):
             if ((i > 1 and j > 1) and string1[i - 1] == string2[j - 2] and string1[i - 2] == string2[j - 1]):
                 table[i][j] = min(table[i][j], table[i - 2][j - 2] + 1)
 
-    OutputTable(table, string1, string2)
+    #OutputTable(table, string1, string2)
 
     return print(table[-1][-1])
 
 
-string1 = "cat2"
-string2 = "act"
+string1 = "n"
+string2 = "j"
 
-GetRecursionLevenshteinMatrix(string1, string2)
+t = time.time_ns()
+print(LevenshteinMatrix(string1, string2))
+end = time.time_ns()
+print(end - t)
 
-#print(RecursionLevenshteinMatrix(string1, string2, matrix))
-#LevenshteinMatrix(string1, string2)
-
-DamerauLevenshteinMatrix(string1, string2)
+#print(GetRecursionLevenshteinMatrix(string1, string2))
+#print(LevenshteinMatrix(string1, string2))
+#print(DamerauLevenshteinMatrix(string1, string2))
