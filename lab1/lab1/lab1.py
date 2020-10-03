@@ -101,10 +101,10 @@ def DamerauLevenshteinMatrix(string1, string2):
 
 
 string1 = "n"
-string2 = "a"
+string2 = "j"
 
 t = time.time_ns()
-print(GetRecursionLevenshteinMatrix(string1, string2))
+print(LevenshteinMatrix(string1, string2))
 end = time.time_ns()
 print(end - t)
 
