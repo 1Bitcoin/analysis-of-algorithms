@@ -28,7 +28,7 @@ def LevenshteinMatrix(string1, string2):
                               table[i][j - 1] + 1,
                               table[i - 1][j - 1] + forfeit)
 
-    #OutputTable(table, string1, string2)
+    OutputTable(table, string1, string2)
 
     return (table[-1][-1])
 
@@ -100,11 +100,14 @@ def DamerauLevenshteinMatrix(string1, string2):
     return print(table[-1][-1])
 
 
-string1 = "n"
-string2 = "j"
+string1 = "qwerty"
+string2 = "queue"
 
 t = time.time_ns()
+print(LevenshteinRecursion(string1, string2))
 print(LevenshteinMatrix(string1, string2))
+print(DamerauLevenshteinMatrix(string1, string2))
+print(GetRecursionLevenshteinMatrix(string1, string2))
 end = time.time_ns()
 print(end - t)
 
