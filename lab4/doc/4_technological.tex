@@ -1,0 +1,79 @@
+\chapter{ Технологический раздел}
+\label{cha:technological}
+
+    В данном разделе будут выбраны средства реализации ПО и представлен листинг кода. 
+
+    \section{Средства реализации}
+        В данной работе используется язык программирования C\# \cite{Charp}, так как
+        он позволяет написать программу в относительно малый срок.
+        В качестве среды разработки использовалась Visual Studio 2017. \cite{visual-studio}
+
+        Для замера процессорного времени был использован класс Stopwatch. \cite{stopwatch}
+
+	Многопоточное программирование было реализовано с помощью пространства имен System.Threading. \cite{thread}
+
+
+        \begin{lstlisting}[label=lst:rtx_parall, caption=Реализация алгоритма обратной трассировки лучей с параллельными вычислениями]
+            int n = 4; // Количество потоков
+
+            int step = data.Width / n;
+
+            Thread[] t = new Thread[n];
+       
+            int x1 = 0;
+            int x2 = step;
+
+            int y1 = 0;
+            int y2 = data.Height;
+         
+            for (int i = 0; i < n; i++)
+            {
+                AllParameters p = new AllParameters(x1, y1, x2, y2);
+
+                t[i] = new Thread(Process);
+                t[i].Start(p);
+
+                x1 = x2;
+                x2 += step; 
+            }
+
+            foreach (Thread thread in t)
+            {
+                thread.Join();
+            }
+
+            void Process(object obj)
+            {
+                AllParameters p = (AllParameters)obj;
+
+                int x = p.x;
+                int y = p.y;
+
+                int endx = p.endx;
+                int endy = p.endy;
+
+                for (int i = x; i < endx; i++)
+                {
+                    for (int j = y; j < endy; j++)
+                    {
+                        int[] work = { i - data.Height / 2, j - data.Width / 2 };
+
+                        double[] direction = RayTracing.CanvasToViewport(data.Width, data.Height, work);
+                        direction = MyMath.MultiplyMV(cameraRotationOY, direction);
+
+                        double[] color = RayTracing.TraceRay(recursionDepth, lights, objects, cameraPosition, direction, 1, Double.PositiveInfinity, 0);
+
+                        var offset = ((j * data.Width) + i) * depth;
+
+                        buffer[offset + 0] = (byte)color[2];
+                        buffer[offset + 1] = (byte)color[1];
+                        buffer[offset + 2] = (byte)color[0];
+                    }
+                }
+
+            }
+        \end{lstlisting}
+
+    
+
+\newpage
