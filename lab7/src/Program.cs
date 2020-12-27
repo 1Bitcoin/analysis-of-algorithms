@@ -10,7 +10,7 @@ namespace lab_07
 
     class Program
     {
-        const string BASE_PATH = "F:/mare/from_win_8/Desktop/bmstu/sem_5/bmstu-AA/lab_07/source";
+        const string BASE_PATH = "C:/Users/zhigalkin/OneDrive/Desktop/lab_07/source";
         const string RESULT_BINARY_PATH = BASE_PATH + "/binary.txt";
         const string RESULT_BRUTEFORCE_PATH = BASE_PATH + "/brute_force.txt";
         const string RESULT_SEGMENTS_PATH = BASE_PATH + "/segments.txt";
